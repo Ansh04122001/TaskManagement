@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TaskItem>
+
+<h3 class="mb-4">Task List</h3>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" class="d-flex">
+            <input name="search" class="form-control me-2" placeholder="Search by title" />
+            <button class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <div class="col-md-6 text-end">
+        <a asp-action="Create" class="btn btn-success">
+            + Add Task
+        </a>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Created On</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.TaskTitle</td>
+                <td>
+                    <span class="badge @(task.TaskStatus == "Completed" ? "bg-success" : "bg-warning")">
+                        @task.TaskStatus
+                    </span>
+                </td>
+                <td>@task.TaskDueDate.ToShortDateString()</td>
+                <td>
+                    @(
+                        task.CreatedOn == DateTime.MinValue
+                        ? (task.LastUpdatedOn == DateTime.MinValue
+                        ? "-"
+                        : task.LastUpdatedOn.ToString("dd-MMM-yyyy"))
+                        : task.CreatedOn.ToString("dd-MMM-yyyy")
+                        )
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@task.Id" class="btn btn-sm btn-info">View</a>
+                    <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@task.Id"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure?')">
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
