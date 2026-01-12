@@ -5,14 +5,35 @@
 
 This project is a **Task Management System** built using **ASP.NET Core MVC** and **Entity Framework Core**. The application allows users to perform full **CRUD operations (Create, Read, Update, Delete)** on tasks along with search functionality. It demonstrates backend development, database design, MVC architecture, and proper documentation practices as required by the assignment.
 
-Key features:
+## 📌 Key Features
 
-* Create, view, edit, and delete tasks
+### ✅ Task List & Search
+- View all tasks in a tabular format
+- Search tasks by title
+- ![Task List & Search](Screenshots/task-list.png)
 
-* Search tasks by title
-* Server-side rendered MVC views
-* Session-based logout handling
-* Clean separation of concerns using MVC
+### ➕ Create Task
+- Add new tasks with **title, status, due date, remarks, and description**
+
+### ✏️ Edit Task
+- Update task details and status easily
+
+### 🔍 Task Details View
+- View complete task information including created/updated metadata
+
+### 🔐 Authentication (Login & Register)
+- Secure user authentication using **ASP.NET Core Identity**
+  - Login Page
+  - Register Page
+
+### 🗑️ Delete Confirmation
+- Modal popup confirmation before deleting a task
+
+### 🧱 Architecture & Design
+- Server-side rendered MVC views
+- Clean separation of concerns using **MVC pattern**
+- Session-based logout handling
+
 
 ---
 
