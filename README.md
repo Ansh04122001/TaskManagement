@@ -1,220 +1,224 @@
-# TaskManagement
 # Task Management System
 
-## 2.1.3.1 Overview of What Is Being Built
+A **Task Management System** built using **ASP.NET Core MVC** and **Entity Framework Core**. This application demonstrates full **CRUD operations**, search functionality, authentication, and clean MVC architecture as required by the assignment.
 
-This project is a **Task Management System** built using **ASP.NET Core MVC** and **Entity Framework Core**. The application allows users to perform full **CRUD operations (Create, Read, Update, Delete)** on tasks along with search functionality. It demonstrates backend development, database design, MVC architecture, and proper documentation practices as required by the assignment.
+---
 
-## 📌 Key Features
+## 📌 Overview
+
+The application allows authenticated users to manage tasks with complete lifecycle support:
+
+* Create, view, update, and delete tasks
+* Search tasks by title
+* Secure authentication using **ASP.NET Core Identity**
+* Audit tracking (Created/Updated metadata)
+
+This project focuses on backend development, database design, MVC architecture, and proper technical documentation.
+
+---
+
+## ✨ Key Features
 
 ### ✅ Task List & Search
-- View all tasks in a tabular format
-- Search tasks by title
-- ![Task List & Search](Screenshots/task-list.png)
+
+* View all tasks in a tabular format
+* Search tasks by title
+
+![Task List & Search](Screenshots/task-list.png)
 
 ### ➕ Create Task
-- Add new tasks with **title, status, due date, remarks, and description**
-- ![Create Task](Screenshots/create-task.png)  
+
+* Add tasks with:
+
+  * Title
+  * Status
+  * Due Date
+  * Remarks
+  * Description
+
+![Create Task](Screenshots/create-task.png)
 
 ### ✏️ Edit Task
-- Update task details and status easily
-- ![Edit Task ](Screenshots/edit-task.png) 
 
-### 🔍 Task Details View
-- View complete task information including created/updated metadata
-- ![Task Details](Screenshots/task-details.png)   
+* Update task details and status
 
-### 🔐 Authentication (Login & Register)
-- Secure user authentication using **ASP.NET Core Identity**
-  - Login Page
-  - ![login](Screenshots/login.png) 
-  - Register Page
-  - ![Register](Screenshots/register.png) 
+![Edit Task](Screenshots/edit-task.png)
+
+### 🔍 Task Details
+
+* View complete task information
+* Includes created and last-updated audit details
+
+![Task Details](Screenshots/task-details.png)
+
+### 🔐 Authentication
+
+* Secure login and registration using **ASP.NET Core Identity**
+
+**Login Page**
+
+![Login](Screenshots/login.png)
+
+**Register Page**
+
+![Register](Screenshots/register.png)
 
 ### 🗑️ Delete Confirmation
-- Modal popup confirmation before deleting a task
-- ![Delete Task](Screenshots/delete-confirmation.png)  
 
-### 🧱 Architecture & Design
-- Server-side rendered MVC views
-- Clean separation of concerns using **MVC pattern**
-- Session-based logout handling
+* Modal popup confirmation before deleting a task
 
+![Delete Confirmation](Screenshots/delete-confirmation.png)
 
 ---
 
-## 2.1.3.2 Database Design
+## 🧱 Architecture & Design
 
-### 2.1.3.2.1 ER Diagram
+* Server-side rendered **ASP.NET Core MVC** application
+* Clean separation of concerns using MVC pattern
+* Session-based logout handling
 
-```
-+---------------------------+
-|        AspNetUsers        |
-+---------------------------+
-| Id (PK)                   |
-| UserName                  |
-| Email                     |
-| PasswordHash              |
-| ...                       |
-+-------------+-------------+
-              |
-              | 1
-              |
-              | *
-+-------------v-------------+
-|         TaskItem           |
-+---------------------------+
-| Id (PK)                   |
-| TaskTitle                 |
-| TaskDescription           |
-| TaskDueDate               |
-| TaskStatus                |
-| TaskRemarks               |
-| CreatedOn                 |
-| LastUpdatedOn             |
-| CreatedBy (FK → UserName) |
-| LastUpdatedBy             |
-+---------------------------+
+---
+
+## 🗄️ Database Design
+
+### ER Diagram
 
 ```
+AspNetUsers (Identity)
+   └── UserName (PK)
+        │
+        │ 1
+        │
+        │ *
+TaskItem
+   ├── Id (PK)
+   ├── TaskTitle
+   ├── TaskDescription
+   ├── TaskDueDate
+   ├── TaskStatus
+   ├── TaskRemarks
+   ├── CreatedOn
+   ├── LastUpdatedOn
+   ├── CreatedBy (FK → UserName)
+   └── LastUpdatedBy
+```
+
 ![ER Diagram](Screenshots/EF.png)
 
-This application currently uses a single core entity (`TaskItem`) to manage task-related information.
+---
+
+### 📘 Data Dictionary
+
+| Column Name     | Data Type     | Description                         |
+| --------------- | ------------- | ----------------------------------- |
+| Id              | int (PK)      | Unique identifier for the task      |
+| TaskTitle       | nvarchar(100) | Title of the task (Required)        |
+| TaskDescription | nvarchar(500) | Detailed description (Required)     |
+| TaskDueDate     | datetime      | Due date of the task                |
+| TaskStatus      | nvarchar(50)  | Status (Pending, Completed, etc.)   |
+| TaskRemarks     | nvarchar(500) | Optional remarks                    |
+| CreatedOn       | datetime      | Record creation timestamp           |
+| LastUpdatedOn   | datetime      | Last modification timestamp         |
+| CreatedBy       | nvarchar(256) | Username who created the task       |
+| LastUpdatedBy   | nvarchar(256) | Username who last modified the task |
 
 ---
 
-### 2.1.3.2.2 Data Dictionary
-
-| Column Name     | Data Type     | Description                                 |
-| --------------- | ------------- | ------------------------------------------- |
-| Id              | int (PK)      | Unique identifier for the task              |
-| TaskTitle       | nvarchar(100) | Title of the task (Required)                |
-| TaskDescription | nvarchar(500) | Detailed description of the task (Required) |
-| TaskDueDate     | datetime      | Due date for the task                       |
-| TaskStatus      | nvarchar(50)  | Status (Pending, Completed, etc.)           |
-| TaskRemarks     | nvarchar(500) | Optional additional remarks                 |
-| CreatedOn       | datetime      | Record creation timestamp                   |
-| LastUpdatedOn   | datetime      | Last modification timestamp                 |
-| CreatedBy       | nvarchar(256) | Username who created the record             |
-| LastUpdatedBy   | nvarchar(256) | Username who last modified the record       |
-
----
-
-### 2.1.3.2.3 Documentation of Indexes Used
+### 📈 Indexes Used
 
 * **Primary Key Index** on `Id`
-* Optional non-clustered index can be added on:
-
-  * `TaskTitle` (to optimize search performance)
-
-Example:
+* Optional non-clustered index on `TaskTitle` for search optimization
 
 ```sql
-CREATE NONCLUSTERED INDEX IX_Task_TaskTitle ON Tasks(TaskTitle);
+CREATE NONCLUSTERED INDEX IX_Task_TaskTitle
+ON Tasks(TaskTitle);
 ```
 
 ---
 
-### 2.1.3.2.4 Code First or DB First Approach
+### 🛠️ Code First Approach
 
-✅ **Code First Approach Used**
+✅ **Code First (Entity Framework Core)**
 
-**Reason:**
+**Why Code First?**
 
 * Faster development and iteration
 * Strongly typed domain models
-* Easier version control of schema changes using migrations
-* Ideal for small to medium-sized applications
-
-Entity Framework Core automatically generates the database schema based on model classes.
+* Easy schema versioning using migrations
+* Ideal for small to medium-sized projects
 
 ---
 
-## 2.1.3.3 Application Structure
+## 🏗️ Application Structure
 
-### 2.1.3.3.1 SPA with API Binding
+### MVC (Server-Side Rendering)
 
-❌ Not used
-
-### 2.1.3.3.2 Standard MVC Server-Side Rendering
-
-✅ Used
-
-The application follows **ASP.NET Core MVC**:
-
-* **Models**: TaskItem entity
+* **Models**: Domain entities (TaskItem)
 * **Views**: Razor (.cshtml) views
-* **Controllers**: TasksController handling all HTTP requests
+* **Controllers**: Handle HTTP requests and business logic
 
-This approach was chosen for simplicity, maintainability, and suitability for the assignment scope.
+SPA/API architecture is **not used**, as MVC suits the assignment scope.
 
 ---
 
-## 2.1.3.4 Frontend Structure
-
-### 2.1.3.4.1 Frontend Technology Used
+## 🎨 Frontend Details
 
 * Razor Views (CSHTML)
 * HTML5, CSS3
-* Bootstrap (for responsive UI)
+* Bootstrap 5
 
-**Why:**
+**Why?**
 
-* Tight integration with ASP.NET Core MVC
-* Faster development without separate frontend framework
-* Server-side rendering improves SEO and simplicity
-
-### 2.1.3.4.2 Web or Mobile Application
-
-✅ **Web Application**
-
-The application is web-based and accessible via browser.
+* Seamless integration with ASP.NET Core MVC
+* Rapid UI development
+* Responsive design
 
 ---
 
-## 2.1.3.5 Build and Install
+## ⚙️ Build & Run Instructions
 
-### 2.1.3.5.1 Environment Details & Dependencies
+### Environment & Dependencies
 
-* **.NET SDK**: .NET 6 / .NET 7+
-* **IDE**: Visual Studio 2022 / VS Code
-* **Database**: SQL Server / LocalDB
-* **ORM**: Entity Framework Core
-* **Packages**:
+* .NET SDK: **.NET 6 / .NET 7+**
+* IDE: Visual Studio 2022 / VS Code
+* Database: SQL Server / LocalDB
+* ORM: Entity Framework Core
 
-  * Microsoft.EntityFrameworkCore
-  * Microsoft.EntityFrameworkCore.SqlServer
-  * Microsoft.EntityFrameworkCore.Tools
+### NuGet Packages
+
+* Microsoft.EntityFrameworkCore
+* Microsoft.EntityFrameworkCore.SqlServer
+* Microsoft.EntityFrameworkCore.Tools
 
 ---
 
-### 2.1.3.5.2 How to Build the Project
+### Build the Project
 
 ```bash
 dotnet restore
 dotnet build
 ```
 
-Or using Visual Studio:
+Or in Visual Studio:
 
-* Open solution file (.sln)
-* Click **Build → Build Solution**
+* Open the `.sln` file
+* Select **Build → Build Solution**
 
 ---
 
-### 2.1.3.5.3 How to Run the Project
+### Run the Project
 
 ```bash
 dotnet ef database update
 dotnet run
 ```
 
-Or using Visual Studio:
+Or in Visual Studio:
 
 * Set project as Startup Project
 * Press **F5** or **Ctrl + F5**
 
-Application will run at:
+Application URL:
 
 ```
 https://localhost:5001
@@ -222,37 +226,30 @@ https://localhost:5001
 
 ---
 
-## 2.1.3.6 General Documentation
+## 🧠 Internal Design Details
 
 ### Domain Model (TaskItem)
 
-The `TaskItem` model uses **Data Annotations** for validation and includes **audit fields** for tracking creation and modification details.
+* Uses Data Annotations for validation
+* Includes audit fields:
 
-Key highlights:
+  * CreatedOn
+  * LastUpdatedOn
+  * CreatedBy
+  * LastUpdatedBy
 
-* Validation using `[Required]` and `[StringLength]`
-* Audit fields: `CreatedOn`, `LastUpdatedOn`, `CreatedBy`, `LastUpdatedBy`
-* `CreatedOn` is explicitly controlled in code using `DatabaseGeneratedOption.None`
+### DbContext (ApplicationDbContext)
 
-### DbContext Design (ApplicationDbContext)
+* Inherits from `IdentityDbContext<IdentityUser>`
+* Integrates ASP.NET Core Identity
+* Overrides `SaveChanges()` / `SaveChangesAsync()` to:
 
-The `ApplicationDbContext` inherits from `IdentityDbContext<IdentityUser>`, enabling seamless **ASP.NET Core Identity** integration.
-
-Audit handling is implemented by:
-
-* Overriding `SaveChanges()` and `SaveChangesAsync()`
-* Automatically populating audit fields using `IHttpContextAccessor`
-* Capturing the logged-in username or defaulting to `System`
-
-This approach ensures:
-
-* Centralized audit logic
-* No duplication of audit code in controllers
-* Consistent data integrity across all database operations
+  * Auto-populate audit fields
+  * Capture logged-in username via `IHttpContextAccessor`
 
 ---
 
-### Folder Structure
+## 📁 Folder Structure
 
 ```
 TaskManagement/
@@ -269,138 +266,27 @@ TaskManagement/
 │── appsettings.json
 ```
 
-### Key Controller Responsibilities
+---
 
-* `Index()` – List & search tasks
-* `Details()` – View task details
-* `Create()` – Add new task
-* `Edit()` – Update existing task
-* `Delete()` – Remove task
-* `Logout()` – Clear session
+## 🎯 Assignment Objectives Coverage
+
+✔ Backend Technologies – ASP.NET Core MVC, EF Core
+✔ Frontend Technologies – Razor, Bootstrap
+✔ Database Systems – SQL Server
+✔ CRUD Operations & Search
+✔ Authentication & Authorization
+✔ Clean Documentation (GitHub-ready)
 
 ---
 
-## 2.2 Assignment Objectives Coverage
+## ✅ Conclusion
 
-✔ Backend technologies – ASP.NET Core MVC, EF Core
-✔ Frontend technologies – Razor, Bootstrap
-✔ Database systems – SQL Server, EF Core
-✔ Problem-solving – CRUD, search, validation
-✔ Documentation – Markdown-based GitHub documentation
-✔ Planning & execution – Structured MVC design
+This project fulfills all assignment requirements, including:
 
----
-2.2.2.1 Database Management System
+* Functional CRUD operations
+* Secure authentication
+* Database design with ER diagram
+* Proper architectural decisions
+* Clear and structured GitHub documentation
 
-The Task Management System uses a Relational Database Management System (RDBMS) to store and manage task-related and user authentication data.
-The database ensures:
-
-Data integrity through primary and foreign keys
-
-Efficient querying using indexes
-
-Secure storage of user credentials via ASP.NET Core Identity
-
-Responsibilities of the Database Layer:
-
-Persist task records
-
-Maintain user authentication and authorization data
-
-Store audit information (CreatedOn, CreatedBy, etc.)
-
-2.2.2.2 Backend Modules (MVC / API Based)
-
-The backend is implemented using ASP.NET Core MVC following the Model–View–Controller (MVC) architectural pattern.
-
-Backend Responsibilities:
-
-Handling HTTP requests and responses
-
-Implementing business logic
-
-Performing CRUD operations using Entity Framework Core
-
-Managing authentication and authorization
-
-Key Backend Components:
-
-Controllers: Handle user requests (TasksController)
-
-Models: Represent domain entities (TaskItem)
-
-DbContext: Manages database operations (ApplicationDbContext)
-
-Identity Framework: Manages login, registration, and user sessions
-
-2.2.2.3 Frontend Module – SPA or MVC/MPA Based
-
-This application uses a Traditional MVC / MPA (Multi-Page Application) approach.
-
-Frontend Characteristics:
-
-Server-side rendered Razor views
-
-Each user action results in a page request/response cycle
-
-Clean separation of UI and backend logic
-
-Why MVC/MPA was chosen:
-
-Simpler architecture for assignment scope
-
-No need for separate frontend framework
-
-Easy integration with ASP.NET Core Identity
-
-2.2.3 Choice of Technologies
-2.2.3.1 Programming Language
-
-The project is implemented using:
-
-✔ C#
-
-Reason:
-
-Native language for ASP.NET Core
-
-Strongly typed and object-oriented
-
-Excellent support for MVC, ORM, and Identity
-
-(Other allowed languages per assignment: Java, Python, PHP – not used in this project)
-
-2.2.3.2 RDBMS
-✔ Microsoft SQL Server
-
-Reason:
-
-Seamless integration with Entity Framework Core
-
-Reliable, scalable, and enterprise-ready
-
-Supported by ASP.NET Core Identity schema
-
-(Other allowed databases: PostgreSQL, MySQL, Oracle – not used)
-
-2.2.3.3 Frontend Technologies
-✔ Web-Based Technologies Used
-
-Razor Views (CSHTML)
-
-HTML5
-
-CSS3
-
-Bootstrap 5
-
-Reason:
-
-Rapid UI development
-
-Responsive design
-
-Tight coupling with ASP.NET Core MVC
-## Conclusion
-
-This project fulfills all requirements mentioned in the assignment document, including working demo, public GitHub hosting, proper documentation, database design explanation, and clear architectural decisions. The solution is scalable, maintainable, and ready for evaluation.  make corre er diagram 
+The solution is **scalable, maintainable, and ready for evaluation**.
