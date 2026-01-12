@@ -14,20 +14,26 @@ This project is a **Task Management System** built using **ASP.NET Core MVC** an
 
 ### ➕ Create Task
 - Add new tasks with **title, status, due date, remarks, and description**
+- ![Create Task](Screenshots/create-task.png)  
 
 ### ✏️ Edit Task
 - Update task details and status easily
+- ![Edit Task ](Screenshots/edit-task.png) 
 
 ### 🔍 Task Details View
 - View complete task information including created/updated metadata
+- ![Task Details](Screenshots/task-details.png)   
 
 ### 🔐 Authentication (Login & Register)
 - Secure user authentication using **ASP.NET Core Identity**
   - Login Page
+  - ![login](Screenshots/login.png) 
   - Register Page
+  - ![Register](Screenshots/register.png) 
 
 ### 🗑️ Delete Confirmation
 - Modal popup confirmation before deleting a task
+- ![Delete Task](Screenshots/delete-confirmation.png)  
 
 ### 🧱 Architecture & Design
 - Server-side rendered MVC views
