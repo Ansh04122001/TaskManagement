@@ -20,16 +20,34 @@ Key features:
 ### 2.1.3.2.1 ER Diagram
 
 ```
-+-------------------+
-|     TaskItem      |
-+-------------------+
-| Id (PK)           |
-| TaskTitle         |
-| TaskDescription   |
-| TaskDueDate       |
-| TaskStatus        |
-| TaskRemarks       |
-+-------------------+
++---------------------------+
+|        AspNetUsers        |
++---------------------------+
+| Id (PK)                   |
+| UserName                  |
+| Email                     |
+| PasswordHash              |
+| ...                       |
++-------------+-------------+
+              |
+              | 1
+              |
+              | *
++-------------v-------------+
+|         TaskItem           |
++---------------------------+
+| Id (PK)                   |
+| TaskTitle                 |
+| TaskDescription           |
+| TaskDueDate               |
+| TaskStatus                |
+| TaskRemarks               |
+| CreatedOn                 |
+| LastUpdatedOn             |
+| CreatedBy (FK → UserName) |
+| LastUpdatedBy             |
++---------------------------+
+
 ```
 
 This application currently uses a single core entity (`TaskItem`) to manage task-related information.
