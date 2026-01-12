@@ -76,7 +76,8 @@ This project is a **Task Management System** built using **ASP.NET Core MVC** an
 | LastUpdatedBy             |
 +---------------------------+
 
-![ER Diagram](Screenshots/EF Diagram.drawio.png)```
+```
+![ER Diagram](Screenshots/EF Diagram.drawio.png)
 
 This application currently uses a single core entity (`TaskItem`) to manage task-related information.
 
