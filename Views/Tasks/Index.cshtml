@@ -1,20 +1,27 @@
 ﻿@model IEnumerable<TaskItem>
 
 <h3 class="mb-4">Task List</h3>
-
 <div class="row mb-3">
     <div class="col-md-6">
-        <form method="get" class="d-flex">
-            <input name="search" class="form-control me-2" placeholder="Search by title" />
+        <form method="get" id="searchForm" class="d-flex">
+            <input name="search"
+                   id="searchInput"
+                   value="@Context.Request.Query["search"]"
+                   class="form-control me-2"
+                   placeholder="Search by title"
+                   oninput="autoClearSearch()" />
+
             <button class="btn btn-primary">Search</button>
         </form>
     </div>
+
     <div class="col-md-6 text-end">
         <a asp-action="Create" class="btn btn-success">
             + Add Task
         </a>
     </div>
 </div>
+
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -50,14 +57,60 @@
                 <td>
                     <a asp-action="Details" asp-route-id="@task.Id" class="btn btn-sm btn-info">View</a>
                     <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-sm btn-warning">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@task.Id"
+                    <a href="javascript:void(0);"
                        class="btn btn-sm btn-danger"
-                       onclick="return confirm('Are you sure?')">
+                       data-bs-toggle="modal"
+                       data-bs-target="#deleteModal-@task.Id">
                         Delete
                     </a>
+
                 </td>
 
             </tr>
+       
+        <div class="modal fade" id="deleteModal-@task.Id" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        Are you sure you want to delete this task?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@task.Id"
+                           class="btn btn-danger">
+                            Yes, Delete
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         }
     </tbody>
 </table>
+
+
+<script>
+    function autoClearSearch() {
+        const input = document.getElementById("searchInput");
+
+        // When search box is cleared → auto reload full list
+        if (input.value.trim() === "") {
+            window.location.href = '@Url.Action("Index")';
+        }
+    }
+</script>
+

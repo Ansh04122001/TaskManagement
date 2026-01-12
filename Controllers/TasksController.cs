@@ -27,10 +27,13 @@ namespace TaskManagement.Controllers
             var tasks = _context.Tasks.AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
+            {
                 tasks = tasks.Where(t => t.TaskTitle.Contains(search));
+            }
 
             return View(tasks.ToList());
         }
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
