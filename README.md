@@ -8,6 +8,7 @@ This project is a **Task Management System** built using **ASP.NET Core MVC** an
 Key features:
 
 * Create, view, edit, and delete tasks
+
 * Search tasks by title
 * Server-side rendered MVC views
 * Session-based logout handling
