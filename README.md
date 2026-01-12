@@ -280,26 +280,29 @@ TaskManagement/
 
 ---
 
-## 2.2 Assignment Objectives Coverage
+2.2 Assignment Objectives Coverage
 
-✔ Backend technologies – ASP.NET Core MVC, EF Core
-✔ Frontend technologies – Razor, Bootstrap
-✔ Database systems – SQL Server, EF Core
-✔ Problem-solving – CRUD, search, validation
+The Task Management System successfully covers all required assignment objectives as outlined below:
+
+✔ Backend Technologies – ASP.NET Core MVC, Entity Framework Core
+✔ Frontend Technologies – Razor Views, Bootstrap
+✔ Database Systems – Microsoft SQL Server with EF Core
+✔ Problem Solving – CRUD operations, search functionality, data validation
 ✔ Documentation – Markdown-based GitHub documentation
-✔ Planning & execution – Structured MVC design
+✔ Planning & Execution – Structured MVC architectural design
 
----
+2.2.2 Areas
 2.2.2.1 Database Management System
 
-The Task Management System uses a Relational Database Management System (RDBMS) to store and manage task-related and user authentication data.
-The database ensures:
+The Task Management System uses a Relational Database Management System (RDBMS) to store and manage task-related data and user authentication information.
 
-Data integrity through primary and foreign keys
+Database Features:
 
-Efficient querying using indexes
+Ensures data integrity using primary and foreign keys
 
-Secure storage of user credentials via ASP.NET Core Identity
+Supports efficient querying through indexes
+
+Provides secure storage of user credentials using ASP.NET Core Identity
 
 Responsibilities of the Database Layer:
 
@@ -307,17 +310,17 @@ Persist task records
 
 Maintain user authentication and authorization data
 
-Store audit information (CreatedOn, CreatedBy, etc.)
+Store audit fields such as CreatedOn, CreatedBy, UpdatedOn, etc.
 
 2.2.2.2 Backend Modules (MVC / API Based)
 
-The backend is implemented using ASP.NET Core MVC following the Model–View–Controller (MVC) architectural pattern.
+The backend is developed using ASP.NET Core MVC, following the Model–View–Controller (MVC) architectural pattern.
 
 Backend Responsibilities:
 
 Handling HTTP requests and responses
 
-Implementing business logic
+Implementing application business logic
 
 Performing CRUD operations using Entity Framework Core
 
@@ -325,38 +328,36 @@ Managing authentication and authorization
 
 Key Backend Components:
 
-Controllers: Handle user requests (TasksController)
+Controllers – Handle user requests (e.g., TasksController)
 
-Models: Represent domain entities (TaskItem)
+Models – Represent domain entities (e.g., TaskItem)
 
-DbContext: Manages database operations (ApplicationDbContext)
+DbContext – Manages database interactions (ApplicationDbContext)
 
-Identity Framework: Manages login, registration, and user sessions
+ASP.NET Core Identity – Manages user registration, login, and sessions
 
 2.2.2.3 Frontend Module – SPA or MVC/MPA Based
 
-This application uses a Traditional MVC / MPA (Multi-Page Application) approach.
+The application follows a Traditional MVC / MPA (Multi-Page Application) approach.
 
 Frontend Characteristics:
 
 Server-side rendered Razor views
 
-Each user action results in a page request/response cycle
+Each user action results in a request–response cycle
 
-Clean separation of UI and backend logic
+Clear separation of UI and backend logic
 
-Why MVC/MPA was chosen:
+Reason for Choosing MVC / MPA:
 
-Simpler architecture for assignment scope
+Simpler architecture suitable for the assignment scope
 
-No need for separate frontend framework
+No requirement for a separate frontend framework
 
-Easy integration with ASP.NET Core Identity
+Seamless integration with ASP.NET Core Identity
 
 2.2.3 Choice of Technologies
 2.2.3.1 Programming Language
-
-The project is implemented using:
 
 ✔ C#
 
@@ -368,9 +369,10 @@ Strongly typed and object-oriented
 
 Excellent support for MVC, ORM, and Identity
 
-(Other allowed languages per assignment: Java, Python, PHP – not used in this project)
+(Other languages allowed by the assignment: Java, Python, PHP – not used in this project)
 
 2.2.3.2 RDBMS
+
 ✔ Microsoft SQL Server
 
 Reason:
@@ -379,11 +381,12 @@ Seamless integration with Entity Framework Core
 
 Reliable, scalable, and enterprise-ready
 
-Supported by ASP.NET Core Identity schema
+Fully supported by ASP.NET Core Identity schema
 
-(Other allowed databases: PostgreSQL, MySQL, Oracle – not used)
+(Other databases allowed: PostgreSQL, MySQL, Oracle – not used)
 
 2.2.3.3 Frontend Technologies
+
 ✔ Web-Based Technologies Used
 
 Razor Views (CSHTML)
@@ -398,9 +401,19 @@ Reason:
 
 Rapid UI development
 
-Responsive design
+Responsive and mobile-friendly design
 
-Tight coupling with ASP.NET Core MVC
+Tight integration with ASP.NET Core MVC
+
+If you want, I can also:
+
+Align this exactly to your university rubric
+
+Convert it into PDF / Word formatting
+
+Shorten it for viva or presentation use
+
+Cross-verify with your ER diagram and code structure
 ## Conclusion
 
-This project fulfills all requirements mentioned in the assignment document, including working demo, public GitHub hosting, proper documentation, database design explanation, and clear architectural decisions. The solution is scalable, maintainable, and ready for evaluation.  make corre er diagram 
+This project fulfills all requirements mentioned in the assignment document, including working demo, public GitHub hosting, proper documentation, database design explanation, and clear architectural decisions. The solution is scalable, maintainable, and ready for evaluation.  
